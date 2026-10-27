@@ -4,16 +4,13 @@ import Data.LinkData;
 import Page.FormPaymentPage;
 import Page.IFramePage;
 import Page.LinkPage;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.checkerframework.checker.units.qual.A;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.Date;
 import java.util.List;
 
 import static Utils.operation.*;
@@ -98,19 +95,20 @@ public class mtsByTest {
         Assertions.assertEquals(FormData.emailText, form.textArrearsEmail());
     }
 
+    @DisplayName("Проверка отображения текста в фрэйме оплаты")
+    @Description("Проверяем правильность переноса суммы и номера на фрэйм оплаты, проверяем текст во всех полях")
     @Test
     public void IframeTextTest(){
         form.fillAndSubmit();
         iframe.switchFrame();
+
         Assertions.assertEquals(IframeData.textSumCost, iframe.textPayDescriptionCost());
         Assertions.assertEquals(IframeData.textPayDescription, iframe.textPayDescription());
         Assertions.assertEquals(IframeData.textButtonPay, iframe.textButtonPay());
-
         Assertions.assertEquals(IframeData.textNameCard, iframe.textNameCard());
         Assertions.assertEquals(IframeData.textCVC, iframe.textCVC());
         Assertions.assertEquals(IframeData.textTerm, iframe.textTerm());
         Assertions.assertEquals(IframeData.textNumberCard, iframe.textNumberCard());
-
         List<String> allScr = iframe.listLogos();
         for (String keyword : IframeData.resultLogosIframe) {
             Assertions.assertTrue(allScr.toString().contains(keyword.toLowerCase()));
