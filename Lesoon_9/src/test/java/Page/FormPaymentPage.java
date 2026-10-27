@@ -1,4 +1,6 @@
 package Page;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import java.util.List;
 import static Data.FormData.*;
@@ -9,10 +11,13 @@ public class FormPaymentPage {
     public FormPaymentPage(WebDriver driver){
         this.driver = driver;
     }
-
+    @Step("Заполняем форму и отправляем")
     public void fillAndSubmit(){
+        Allure.step("Вводим номер телефона: " + testPhone);
         sendTextClassName(driver, classNamePhone, testPhone);
+        Allure.step("Вводим сумму пополнения: " + sumReplenishment);
         sendTextId(driver, idSum, sumReplenishment);
+        Allure.step("Отправляем форму нажав на кнопку");
         clickXPath(driver, buttonReplenishment);
     }
 
